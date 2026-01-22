@@ -12,14 +12,11 @@ class Particle {
         this.x += this.vx * dt;
         this.y += this.vy * dt;
     }
-}
-
+}  
 const containerWidth = window.innerWidth;
 const containerHeight = window.innerHeight;
 
-let lastTime = performance.now();
 const p = new Particle(50, 50, 200, 150, 5, 'red');
-
 const ball = document.createElement('div');
 ball.style.position = 'absolute';
 ball.style.width = p.radius * 2 + 'px';
@@ -46,12 +43,21 @@ function handleCollision(p) {
     }
 }
 
+let lastTime = null;    
 function loop(time) {
-    let dt = (time - lastTime) / 1000;
+    if (lastTime === null) {
+        lastTime = time;
+        requestAnimationFrame(loop);
+        return;
+    }
+
+    const dt = (time - lastTime) / 1000;
     lastTime = time;
+    console.log(dt);
     p.update(dt);
     handleCollision(p);
-    ball.style.transform =`translate(${p.x - p.radius}px, ${p.y - p.radius}px)`;
+    ball.style.left = (p.x - p.radius) + 'px';
+    ball.style.top = (p.y - p.radius) + 'px';
     requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
