@@ -69,11 +69,34 @@ function loop(time) {
     const dt = (time - lastTime) / 1000;
     lastTime = time;
     console.log(dt);
-    p.update(dt);
-    handleCollision(p);
-    p.el.style.left = (p.x - p.radius) + 'px';
-    p.el.style.top = (p.y - p.radius) + 'px';
+    particles.forEach(p => {
+        p.update(dt);
+        handleCollision(p);
+        p.el.style.transform = `translate(${p.x - p.radius}px, ${p.y - p.radius}px)`;
+    });
     requestAnimationFrame(loop);
 }
+let particles = [];
+let baseSpeed = 50;
+function createParticles(n, speedScale) {
+    particles.length = 0;
+    container.innerHTML = "";
 
+    for (let i = 0; i < n; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = baseSpeed * speedScale;
+        const particle = new Particle(
+                Math.random() * containerWidth,
+                Math.random() * containerHeight,
+                Math.cos(angle) * speed,
+                Math.sin(angle) * speed,
+                4,
+                'red',
+                container
+            )
+        particles.push(particle);
+        container.appendChild(particle.el);
+    }
+}
+createParticles(100, 1);
 requestAnimationFrame(loop);
