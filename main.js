@@ -18,9 +18,9 @@ const container = document.createElement('div');
 container.style.position = 'relative';
 container.style.width = '600px';
 container.style.height = '400px';
-container.style.border = '2px solid white';
+container.style.border = '2px solid black';
 container.style.margin = '50px';
-container.style.background = '#111';
+container.style.background = 'lightpink';
 
 document.body.appendChild(container);
 
