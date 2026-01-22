@@ -6,6 +6,12 @@ class Particle {
         this.vy = vy;
         this.radius = radius;
         this.color = color;
+
+        this.el = document.createElement('div');
+        this.el.style.position = 'absolute';
+        this.el.style.width = this.radius * 2 + 'px';
+        this.el.style.height = this.radius * 2 + 'px';
+        this.el.style.backgroundColor = this.color;
     }
 
     update(dt) {
@@ -26,12 +32,7 @@ document.body.appendChild(container);
 
 //create a particle
 const p = new Particle(50, 50, 200, 150, 5, 'red');
-const ball = document.createElement('div');
-ball.style.position = 'absolute';
-ball.style.width = p.radius * 2 + 'px';
-ball.style.height = p.radius * 2 + 'px';
-ball.style.backgroundColor = p.color;
-container.appendChild(ball);
+container.appendChild(p.el);
 
 
 const containerWidth = container.clientWidth;
@@ -70,8 +71,9 @@ function loop(time) {
     console.log(dt);
     p.update(dt);
     handleCollision(p);
-    ball.style.left = (p.x - p.radius) + 'px';
-    ball.style.top = (p.y - p.radius) + 'px';
+    p.el.style.left = (p.x - p.radius) + 'px';
+    p.el.style.top = (p.y - p.radius) + 'px';
     requestAnimationFrame(loop);
 }
+
 requestAnimationFrame(loop);
