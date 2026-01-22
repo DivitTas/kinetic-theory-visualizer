@@ -13,16 +13,30 @@ class Particle {
         this.y += this.vy * dt;
     }
 }  
-const containerWidth = window.innerWidth;
-const containerHeight = window.innerHeight;
+//create a container
+const container = document.createElement('div');
+container.style.position = 'relative';
+container.style.width = '600px';
+container.style.height = '400px';
+container.style.border = '2px solid white';
+container.style.margin = '50px';
+container.style.background = '#111';
 
+document.body.appendChild(container);
+
+//create a particle
 const p = new Particle(50, 50, 200, 150, 5, 'red');
 const ball = document.createElement('div');
 ball.style.position = 'absolute';
 ball.style.width = p.radius * 2 + 'px';
 ball.style.height = p.radius * 2 + 'px';
 ball.style.backgroundColor = p.color;
-document.body.appendChild(ball);
+container.appendChild(ball);
+
+
+const containerWidth = container.clientWidth;
+const containerHeight = container.clientHeight;
+
 
 function handleCollision(p) {
     if (p.x - p.radius < 0 && p.vx < 0) {
